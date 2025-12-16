@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | OdontoPro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 font-sans antialiased h-screen flex items-center justify-center">
+
+<div class="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden">
+    <div class="bg-blue-600 p-8 text-center">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white mb-4">
+            <i class="fas fa-tooth text-blue-600 text-3xl"></i>
+        </div>
+        <h2 class="text-2xl font-bold text-white">Bem-vindo de volta!</h2>
+        <p class="text-blue-100 mt-2">Acesse sua área exclusiva</p>
+    </div>
+
+    <div class="p-8">
+
+        <div id="error-container" class="hidden mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+            <strong class="font-bold">Erro!</strong>
+            <span class="block sm:inline" id="error-message">Usuário ou senha inválidos.</span>
+        </div>
+
+        <form id="login-form" class="space-y-6">
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-envelope text-gray-400"></i>
+                    </div>
+                    <input type="email" id="email" name="email" required
+                           class="pl-10 block w-full rounded-lg border-gray-300 border p-2.5 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                           placeholder="seu@email.com">
+                </div>
+            </div>
+
+            <div>
+                <div class="flex items-center justify-between mb-1">
+                    <label for="password" class="block text-sm font-medium text-gray-700">Senha</label>
+                    <a href="#" class="text-sm text-blue-600 hover:text-blue-500 hover:underline">Esqueceu a senha?</a>
+                </div>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-lock text-gray-400"></i>
+                    </div>
+                    <input type="password" id="password" name="password" required
+                           class="pl-10 block w-full rounded-lg border-gray-300 border p-2.5 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                           placeholder="••••••••">
+                </div>
+            </div>
+
+            <button type="submit"
+                    class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
+                Entrar
+            </button>
+        </form>
+
+        <div class="mt-6 text-center text-sm">
+            <p class="text-gray-600">
+                Ainda não tem uma conta?
+                <a href="/cadastro" class="font-medium text-blue-600 hover:text-blue-500 hover:underline">Cadastre-se gratuitamente</a>
+            </p>
+        </div>
+
+        <div class="mt-4 text-center">
+            <a href="/" class="text-xs text-gray-400 hover:text-gray-600 flex items-center justify-center gap-1">
+                <i class="fas fa-arrow-left"></i> Voltar para Home
+            </a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
