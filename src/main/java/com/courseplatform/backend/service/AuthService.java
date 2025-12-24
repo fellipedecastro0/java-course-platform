@@ -15,6 +15,7 @@ public class AuthService {
 
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
+    private final TokenService tokenService; // <--- Injetamos o novo serviço
 
     public LoginResponseDTO login(LoginDTO dto) {
         User user = repository.findByEmail(dto.getEmail())
@@ -24,9 +25,13 @@ public class AuthService {
             throw new RuntimeException("Senha Incorreta!");
         }
 
+        // AGORA SIM: Gera o token real
+        String token = tokenService.generateToken(user);
+
         return new LoginResponseDTO(
-                "TOKEN_FALSO_POR_ENQUANTO",
+                token,
                 user.getName(),
                 user.getRole().toString()
-        );    }
+        );
+    }
 }
