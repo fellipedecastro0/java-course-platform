@@ -3,73 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro | OdontoPro</title>
+    <title>Cadastro | OdontoPro Luxury</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Manrope:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
-<body class="bg-gray-50 font-sans antialiased min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
 
-<div class="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: '#D4AF37',
+                        dark: '#0a0a0a',
+                        surface: '#121212'
+                    },
+                    fontFamily: {
+                        sans: ['Manrope', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .luxury-bg {
+            background-image: linear-gradient(to bottom, rgba(0,0,0,0.85), rgba(0,0,0,0.95)), url('https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=2068&auto=format&fit=crop');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+        }
+        /* Custom Scrollbar para não quebrar o dark mode */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #121212; }
+        ::-webkit-scrollbar-thumb { background: #333; }
+        ::-webkit-scrollbar-thumb:hover { background: #D4AF37; }
+    </style>
+</head>
+<body class="luxury-bg min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 font-sans text-gray-200">
+
+<div class="w-full max-w-md bg-surface/95 backdrop-blur-md border border-white/10 shadow-2xl relative">
+
+    <div class="h-1 w-full bg-gradient-to-r from-gold via-yellow-200 to-gold"></div>
+
     <div class="p-8">
         <div class="text-center mb-8">
-            <i class="fas fa-tooth text-blue-600 text-4xl mb-4"></i>
-            <h2 class="text-2xl font-bold text-gray-900">Crie sua conta</h2>
-            <p class="text-gray-600 mt-2">Comece sua jornada de especialização hoje.</p>
+            <i class="fas fa-tooth text-gold text-4xl mb-4 drop-shadow-[0_0_10px_rgba(212,175,55,0.5)]"></i>
+            <h2 class="text-2xl font-serif font-bold text-white tracking-wide">Nova Conta</h2>
+            <p class="text-gray-500 text-xs uppercase tracking-widest mt-2">Junte-se à Elite da Odontologia</p>
         </div>
 
-        <div id="error-container" class="hidden mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-            <strong class="font-bold">Atenção!</strong>
+        <div id="error-container" class="hidden mb-6 bg-red-900/20 border border-red-900 text-red-300 px-4 py-3 rounded text-sm relative" role="alert">
             <span class="block sm:inline" id="error-message">Erro ao processar cadastro.</span>
         </div>
 
-        <form id="cadastro-form" class="space-y-4">
+        <form id="cadastro-form" class="space-y-5">
             <div>
-                <label for="nome" class="block text-sm font-medium text-gray-700 mb-1">Nome Completo</label>
+                <label for="nome" class="block text-xs font-bold text-gray-400 mb-1">Nome Completo</label>
                 <input type="text" id="nome" name="nome" required
-                       class="block w-full rounded-lg border-gray-300 border p-2.5 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                       class="block w-full bg-dark border border-gray-800 text-white p-2.5 focus:border-gold focus:ring-0 outline-none transition-colors placeholder-gray-700"
                        placeholder="Ex: Dr. João Silva">
             </div>
 
             <div>
-                <label for="cpf" class="block text-sm font-medium text-gray-700 mb-1">CPF</label>
-                <input type="text" id="cpf" name="cpf" required
-                       class="block w-full rounded-lg border-gray-300 border p-2.5 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                <label for="cpf" class="block text-xs font-bold text-gray-400 mb-1">CPF</label>
+                <input type="text" id="cpf" name="cpf"
+                       class="block w-full bg-dark border border-gray-800 text-white p-2.5 focus:border-gold focus:ring-0 outline-none transition-colors placeholder-gray-700"
                        placeholder="000.000.000-00">
             </div>
 
             <div>
-                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-mail Profissional</label>
+                <label for="email" class="block text-xs font-bold text-gray-400 mb-1">E-mail Profissional</label>
                 <input type="email" id="email" name="email" required
-                       class="block w-full rounded-lg border-gray-300 border p-2.5 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                       class="block w-full bg-dark border border-gray-800 text-white p-2.5 focus:border-gold focus:ring-0 outline-none transition-colors placeholder-gray-700"
                        placeholder="seu@email.com">
             </div>
 
-            <div>
-                <label for="senha" class="block text-sm font-medium text-gray-700 mb-1">Senha</label>
-                <input type="password" id="senha" name="senha" required
-                       class="block w-full rounded-lg border-gray-300 border p-2.5 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                       placeholder="Mínimo 6 caracteres">
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label for="senha" class="block text-xs font-bold text-gray-400 mb-1">Senha</label>
+                    <input type="password" id="senha" name="senha" required
+                           class="block w-full bg-dark border border-gray-800 text-white p-2.5 focus:border-gold focus:ring-0 outline-none transition-colors placeholder-gray-700"
+                           placeholder="••••••">
+                </div>
+
+                <div>
+                    <label for="confirma_senha" class="block text-xs font-bold text-gray-400 mb-1">Confirmar</label>
+                    <input type="password" id="confirma_senha" name="confirma_senha" required
+                           class="block w-full bg-dark border border-gray-800 text-white p-2.5 focus:border-gold focus:ring-0 outline-none transition-colors placeholder-gray-700"
+                           placeholder="••••••">
+                </div>
             </div>
 
-            <div>
-                <label for="confirma_senha" class="block text-sm font-medium text-gray-700 mb-1">Confirmar Senha</label>
-                <input type="password" id="confirma_senha" name="confirma_senha" required
-                       class="block w-full rounded-lg border-gray-300 border p-2.5 focus:ring-blue-500 focus:border-blue-500 outline-none"
-                       placeholder="Repita a senha">
-            </div>
-
-            <div class="pt-2">
+            <div class="pt-4">
                 <button type="submit"
-                        class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
-                    Criar Conta
+                        class="w-full flex justify-center py-3 px-4 border border-transparent text-xs font-bold uppercase tracking-widest text-black bg-gold hover:bg-yellow-400 focus:outline-none transition-all hover:shadow-[0_0_15px_rgba(212,175,55,0.4)] transform hover:-translate-y-0.5">
+                    Finalizar Cadastro
                 </button>
             </div>
         </form>
 
-        <div class="mt-6 text-center text-sm">
-            <p class="text-gray-600">
-                Já tem cadastro?
-                <a href="/auth/login.html" class="font-medium text-blue-600 hover:text-blue-500 hover:underline">Fazer Login</a>
+        <div class="mt-6 text-center text-sm border-t border-white/5 pt-4">
+            <p class="text-gray-500">
+                Já possui acesso?
+                <a href="/auth/login.html" class="font-bold text-gold hover:text-white transition-colors">Entrar</a>
             </p>
         </div>
     </div>

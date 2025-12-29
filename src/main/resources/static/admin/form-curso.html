@@ -3,102 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Novo Curso | Admin</title>
+    <title>Novo Curso | OdontoPro Luxury</title>
 
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Manrope:wght@300;400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: '#D4AF37',
+                        dark: '#0a0a0a',
+                        panel: '#151515',
+                        input: '#0f0f0f'
+                    },
+                    fontFamily: {
+                        sans: ['Manrope', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
+        /* Scrollbar Dark */
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f5f9; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        ::-webkit-scrollbar-track { background: #111; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #D4AF37; }
+
+        /* Remove setinhas do input number */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none; margin: 0;
+        }
     </style>
 </head>
 
-<body class="bg-gray-50 font-sans antialiased min-h-screen py-10 flex justify-center items-start">
+<body class="bg-black font-sans text-gray-300 min-h-screen py-10 flex justify-center items-start selection:bg-gold selection:text-black">
 
-<div class="w-full max-w-4xl bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 mx-4">
+<div class="w-full max-w-4xl bg-panel rounded-none border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] mx-4 relative">
 
-    <div class="bg-white border-b border-gray-200 px-8 py-6 flex justify-between items-center">
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600">
+    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold to-transparent"></div>
+
+    <div class="border-b border-white/5 px-8 py-6 flex justify-between items-center bg-white/5">
+        <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full border border-gold/30 flex items-center justify-center bg-dark text-gold shadow-lg">
                 <i class="fas fa-plus"></i>
             </div>
             <div>
-                <h2 class="text-xl font-bold text-gray-900">Novo Curso</h2>
-                <p class="text-gray-500 text-sm">Preencha os dados para disponibilizar na plataforma.</p>
+                <h2 class="text-2xl font-serif font-bold text-white tracking-wide">Novo Curso</h2>
+                <p class="text-gray-500 text-xs uppercase tracking-widest">Adicionar ao Catálogo</p>
             </div>
         </div>
-        <a href="dashboard.html" class="text-gray-400 hover:text-red-500 transition">
+        <a href="dashboard.html" class="text-gray-600 hover:text-red-500 transition-colors duration-300">
             <i class="fas fa-times text-xl"></i>
         </a>
     </div>
 
-    <form id="create-course-form" class="p-8 space-y-8">
+    <form id="create-course-form" class="p-10 space-y-10">
 
         <div>
-            <h3 class="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4 border-l-4 border-blue-600 pl-3">Detalhes Principais</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <h3 class="text-white font-serif text-lg mb-6 flex items-center">
+                <span class="w-1 h-6 bg-gold mr-3"></span>
+                Informações Principais
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="col-span-2">
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Título do Curso</label>
-                    <input type="text" id="title" name="title" required placeholder="Ex: Ortodontia Corretiva Avançada"
-                           class="block w-full rounded-lg border-gray-300 border p-2.5 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
+                    <label class="block text-xs font-bold text-gold uppercase tracking-wider mb-2">Título do Curso</label>
+                    <input type="text" id="title" name="title" required placeholder="Ex: Estética Dental Avançada"
+                           class="block w-full bg-input border border-gray-800 text-white p-4 focus:border-gold focus:ring-0 outline-none transition-colors placeholder-gray-700">
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">URL Amigável (Slug)</label>
+                    <label class="block text-xs font-bold text-gold uppercase tracking-wider mb-2">Slug (URL Amigável)</label>
                     <div class="relative">
-                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400 text-sm">/cursos/</span>
-                        <input type="text" id="slug" name="slug" placeholder="ortodontia-avancada"
-                               class="block w-full rounded-lg border-gray-300 border p-2.5 pl-16 bg-gray-50 text-gray-500 outline-none">
+                        <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-500 text-sm font-mono">/cursos/</span>
+                        <input type="text" id="slug" name="slug" placeholder="estetica-dental"
+                               class="block w-full bg-input border border-gray-800 text-white p-4 pl-20 focus:border-gold focus:ring-0 outline-none transition-colors placeholder-gray-700">
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Preço (R$)</label>
+                    <label class="block text-xs font-bold text-gold uppercase tracking-wider mb-2">Preço (R$)</label>
                     <div class="relative">
-                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500">R$</span>
+                        <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-gold font-bold">R$</span>
                         <input type="number" id="price" step="0.01" name="price" placeholder="0.00"
-                               class="block w-full rounded-lg border-gray-300 border p-2.5 pl-10 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
+                               class="block w-full bg-input border border-gray-800 text-white p-4 pl-12 focus:border-gold focus:ring-0 outline-none transition-colors placeholder-gray-700 font-bold text-lg">
                     </div>
                 </div>
 
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Categoria</label>
-                    <input type="text" id="category" name="category" placeholder="Ex: Saúde, Tecnologia..."
-                           class="block w-full rounded-lg border-gray-300 border p-2.5 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
+                <div class="col-span-2">
+                    <label class="block text-xs font-bold text-gold uppercase tracking-wider mb-2">Categoria</label>
+                    <input type="text" id="category" name="category" placeholder="Ex: Harmonização Facial"
+                           class="block w-full bg-input border border-gray-800 text-white p-4 focus:border-gold focus:ring-0 outline-none transition-colors placeholder-gray-700">
                 </div>
             </div>
         </div>
 
-        <hr class="border-gray-100">
+        <hr class="border-white/5">
 
         <div>
-            <h3 class="text-sm font-bold text-gray-900 uppercase tracking-wider mb-4 border-l-4 border-green-500 pl-3">Mídia e Descrição</h3>
+            <h3 class="text-white font-serif text-lg mb-6 flex items-center">
+                <span class="w-1 h-6 bg-white mr-3"></span>
+                Mídia e Conteúdo
+            </h3>
 
             <div class="space-y-6">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">URL da Imagem de Capa</label>
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">URL da Imagem de Capa</label>
                     <div class="flex gap-2">
-                        <input type="url" id="imageUrl" name="imageUrl" placeholder="https://exemplo.com/imagem.jpg"
-                               class="block w-full rounded-lg border-gray-300 border p-2.5 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
+                        <input type="url" id="imageUrl" name="imageUrl" placeholder="https://..."
+                               class="block w-full bg-input border border-gray-800 text-white p-4 focus:border-gold focus:ring-0 outline-none transition-colors placeholder-gray-700">
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Descrição Completa</label>
-                    <textarea id="description" rows="5" name="description" placeholder="Descreva o conteúdo..."
-                              class="block w-full rounded-lg border-gray-300 border p-2.5 focus:ring-blue-500 focus:border-blue-500 outline-none transition"></textarea>
+                    <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Descrição Detalhada</label>
+                    <textarea id="description" rows="5" name="description" placeholder="Descreva o conteúdo programático..."
+                              class="block w-full bg-input border border-gray-800 text-white p-4 focus:border-gold focus:ring-0 outline-none transition-colors placeholder-gray-700"></textarea>
                 </div>
             </div>
         </div>
 
-        <div class="flex items-center justify-end gap-4 pt-4 border-t border-gray-100">
-            <a href="dashboard.html" class="px-6 py-3 rounded-lg text-gray-600 bg-white border border-gray-300 hover:bg-gray-50 font-medium transition">
+        <div class="flex items-center justify-end gap-4 pt-6 border-t border-white/5">
+            <a href="dashboard.html" class="px-6 py-3 text-xs font-bold text-gray-500 hover:text-white uppercase tracking-widest transition-colors">
                 Cancelar
             </a>
-            <button type="submit" class="px-8 py-3 rounded-lg text-white bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-200 font-bold transition transform hover:-translate-y-0.5">
-                <i class="fas fa-save mr-2"></i> Salvar Curso
+            <button type="submit" class="px-8 py-4 bg-gold hover:bg-yellow-500 text-black font-bold uppercase tracking-widest text-xs shadow-[0_0_20px_rgba(212,175,55,0.2)] hover:shadow-[0_0_30px_rgba(212,175,55,0.4)] transition-all transform hover:-translate-y-1">
+                <i class="fas fa-save mr-2"></i> Publicar Curso
             </button>
         </div>
 
@@ -106,29 +142,26 @@
 </div>
 
 <script>
-    // Configuração Central
+    // A Lógica do John (Intacta, só inserida no novo design)
     const BASE_URL = "http://localhost:8081";
 
     document.getElementById("create-course-form").addEventListener("submit", async function(event) {
-        event.preventDefault(); // Impede o recarregamento da página
+        event.preventDefault();
 
-        // 1. Pegar o Token
         const token = localStorage.getItem("token");
         if (!token) {
-            alert("Você precisa estar logado!");
+            alert("Sessão expirada.");
             window.location.href = "/auth/login.html";
             return;
         }
 
-        // 2. Coletar dados do formulário
         const title = document.getElementById("title").value;
         const slug = document.getElementById("slug").value;
-        const price = parseFloat(document.getElementById("price").value) || 0; // Garante que seja número
+        const price = parseFloat(document.getElementById("price").value) || 0;
         const category = document.getElementById("category").value;
         const imageUrl = document.getElementById("imageUrl").value;
         const description = document.getElementById("description").value;
 
-        // Cria o objeto JSON
         const courseData = {
             title: title,
             slug: slug,
@@ -139,31 +172,34 @@
         };
 
         try {
-            console.log("Enviando curso para:", `${BASE_URL}/courses`);
+            console.log("Enviando...", courseData);
 
-            // 3. Enviar para a API
             const response = await fetch(`${BASE_URL}/courses`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}` // O Token vai aqui
+                    "Authorization": `Bearer ${token}`
                 },
                 body: JSON.stringify(courseData)
             });
 
-            // 4. Tratamento da Resposta
             if (response.ok) {
-                alert("Curso criado com sucesso!");
-                window.location.href = "dashboard.html"; // Volta para a tabela
+                // Feedback mais elegante
+                const btn = document.querySelector('button[type="submit"]');
+                btn.innerHTML = '<i class="fas fa-check"></i> Sucesso!';
+                btn.classList.add('bg-green-500', 'text-white');
+
+                setTimeout(() => {
+                    window.location.href = "dashboard.html";
+                }, 1000);
             } else {
                 const errorText = await response.text();
-                console.error("Erro do servidor:", errorText);
-                alert("Erro ao criar curso. Verifique se você é Admin. Detalhes no console.");
+                alert("Erro ao criar: " + errorText);
             }
 
         } catch (error) {
-            console.error("Erro de conexão:", error);
-            alert("Erro ao conectar com o servidor 8081.");
+            console.error(error);
+            alert("Erro de conexão.");
         }
     });
 </script>

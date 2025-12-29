@@ -4,8 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // CONFIGURAÇÃO
-// Se o seu backend roda sob um prefixo (ex: /api), altere aqui.
-// Deixe vazio '' se a rota for direta na raiz (ex: site.com/courses)
 const API_PREFIX = '';
 
 // ==========================================
@@ -13,7 +11,6 @@ const API_PREFIX = '';
 // ==========================================
 async function fetchDashboardStats() {
     console.log("Iniciando dashboard...");
-    // Apenas para evitar erros se os elementos não existirem na tela de login
     const elStudents = document.getElementById("total-students");
     const elCourses = document.getElementById("total-courses");
 
@@ -25,8 +22,10 @@ async function fetchDashboardStats() {
 // 2. BUSCAR LISTA DE CURSOS
 // ==========================================
 async function fetchAdminCourses() {
-    const tableBody = document.querySelector("tbody");
-    // Se não tiver tabela (estamos em outra página), para por aqui
+    // Agora buscamos pelo ID específico que coloquei no HTML novo
+    // Se não achar pelo ID, tenta pelo tbody genérico
+    const tableBody = document.getElementById("courses-table-body") || document.querySelector("tbody");
+
     if (!tableBody) return;
 
     const token = localStorage.getItem("token");
@@ -34,7 +33,7 @@ async function fetchAdminCourses() {
     if (!token) {
         console.warn("Nenhum token encontrado. Redirecionando...");
         alert("Você não está logado.");
-        window.location.href = "/auth/login.html"; // Descomentei para forçar o login
+        window.location.href = "/auth/login.html";
         return;
     }
 
@@ -51,63 +50,62 @@ async function fetchAdminCourses() {
 
         console.log(`[DEBUG] Status da resposta: ${response.status}`);
 
-        // 1. Erro de Autenticação
         if (response.status === 401 || response.status === 403) {
             console.error("Token inválido ou expirado.");
-            localStorage.removeItem("token"); // Limpa token ruim
+            localStorage.removeItem("token");
             alert("Sessão expirada. Faça login novamente.");
             window.location.href = "/auth/login.html";
             return;
         }
 
-        // 2. Verifica se a resposta é OK antes de tentar ler JSON
         if (!response.ok) {
             const errorText = await response.text();
             throw new Error(`Erro do servidor (${response.status}): ${errorText}`);
         }
 
-        // 3. Tenta fazer o parse do JSON com segurança
-        // (Se o Nginx retornar uma página de erro HTML 404, aqui que falhava antes)
         let courses;
         try {
             courses = await response.json();
         } catch (jsonError) {
-            const rawText = await response.text(); // Tenta ler o texto original se falhar
+            const rawText = await response.text();
             console.error("O servidor não retornou um JSON válido. Retornou:", rawText);
-            throw new Error("A resposta do servidor não é um JSON válido. Verifique se a URL está correta.");
+            throw new Error("A resposta do servidor não é um JSON válido.");
         }
 
         // Renderização
         tableBody.innerHTML = "";
 
         if (!Array.isArray(courses) || courses.length === 0) {
-            tableBody.innerHTML = `<tr><td colspan="4" class="text-center py-4 text-gray-500">Nenhum curso encontrado.</td></tr>`;
+            // Mudei aqui para texto claro
+            tableBody.innerHTML = `<tr><td colspan="4" class="text-center py-8 text-gray-500 uppercase tracking-widest text-xs">Nenhum curso encontrado.</td></tr>`;
             return;
         }
 
         courses.forEach(course => {
             const price = parseFloat(course.price);
+
+            // --- AQUI ESTÁ A MUDANÇA VISUAL (Sua lógica continua igual) ---
             const row = `
-                <tr class="hover:bg-gray-50 transition border-b border-gray-100">
-                    <td class="px-6 py-4 whitespace-nowrap">
+                <tr class="border-b border-gray-800 hover:bg-white/5 transition-colors group">
+                    <td class="px-8 py-6 whitespace-nowrap">
                         <div class="flex items-center">
-                            <div class="h-10 w-10 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600 font-bold">
+                            <div class="h-10 w-10 rounded-full bg-yellow-500/10 flex items-center justify-center text-yellow-500 font-bold border border-yellow-500/30">
                                 ${course.title ? course.title.charAt(0).toUpperCase() : '?'}
                             </div>
                             <div class="ml-4">
-                                <div class="text-sm font-bold text-gray-900">${course.title}</div>
-                                <div class="text-xs text-green-600 bg-green-100 px-2 py-0.5 rounded-full inline-block mt-1">Ativo</div>
+                                <div class="text-sm font-bold text-yellow-500 group-hover:text-yellow-400 transition-colors">${course.title}</div>
+                                <div class="text-[10px] text-green-500 uppercase tracking-wider mt-1 font-bold">Ativo</div>
                             </div>
                         </div>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td class="px-8 py-6 whitespace-nowrap text-sm text-gray-400">
                         ${course.category || 'Geral'}
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    <td class="px-8 py-6 whitespace-nowrap text-sm font-medium text-white">
                         R$ ${isNaN(price) ? '0.00' : price.toFixed(2)}
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <button onclick="deleteCourse(${course.id})" class="text-red-600 hover:text-red-900" title="Excluir">
+                    <td class="px-8 py-6 whitespace-nowrap text-right text-sm font-medium">
+                        <button onclick="deleteCourse(${course.id})" class="text-red-500 hover:text-red-400 transition-colors p-2 rounded-full hover:bg-red-500/10" title="Excluir">
                             <i class="fas fa-trash"></i>
                         </button>
                     </td>
@@ -129,7 +127,7 @@ async function fetchAdminCourses() {
 }
 
 // ==========================================
-// 3. DELETAR CURSO
+// 3. DELETAR CURSO (LÓGICA ORIGINAL)
 // ==========================================
 async function deleteCourse(id) {
     if (!confirm("Tem certeza que deseja excluir este curso?")) return;

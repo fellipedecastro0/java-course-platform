@@ -3,79 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel Admin | OdontoPro</title>
+    <title>Admin Luxury | OdontoPro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: '#D4AF37',
+                        dark: '#111111',
+                        panel: '#1A1A1A'
+                    },
+                    fontFamily: { sans: ['Manrope', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
 </head>
-<body class="bg-gray-50 font-sans antialiased min-h-screen">
+<body class="bg-black text-gray-300 font-sans min-h-screen">
 
 <div id="navbar-container"></div>
 
-<main class="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+<main class="max-w-7xl mx-auto py-12 px-6">
 
-    <div class="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
-        <h1 class="text-2xl font-bold text-gray-900">Painel de Controle</h1>
-        <a href="/admin/form-curso.html" class="flex items-center justify-center py-2.5 px-5 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors">
-            <i class="fas fa-plus mr-2"></i> Adicionar Novo Curso
+    <div class="flex flex-col md:flex-row justify-between items-center mb-12 border-b border-gray-800 pb-8">
+        <div>
+            <h1 class="text-3xl font-bold text-white tracking-tight">Painel Executivo</h1>
+            <p class="text-gray-500 mt-1">Gestão de Alta Performance</p>
+        </div>
+        <a href="/admin/form-curso.html" class="bg-gold hover:bg-yellow-600 text-black font-bold py-3 px-8 rounded-none uppercase tracking-wider text-xs transition-all hover:scale-105">
+            <i class="fas fa-plus mr-2"></i> Novo Curso
         </a>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-        <div class="bg-white rounded-2xl shadow-xl p-6 border border-gray-100 flex items-center">
-            <div class="w-14 h-14 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 text-2xl mr-4">
-                <i class="fas fa-users"></i>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div class="bg-panel p-8 border-l-2 border-gold relative overflow-hidden group">
+            <div class="absolute right-0 top-0 opacity-5 group-hover:opacity-10 transition-opacity transform scale-150">
+                <i class="fas fa-users text-8xl text-gold"></i>
             </div>
-            <div>
-                <p class="text-sm text-gray-500 font-medium">Total de Alunos</p>
-                <p id="total-students" class="text-2xl font-bold text-gray-900">-</p>
-            </div>
+            <p class="text-xs font-bold text-gold uppercase tracking-widest mb-2">Total de Alunos</p>
+            <h3 id="total-students" class="text-4xl font-light text-white">-</h3>
         </div>
-        <div class="bg-white rounded-2xl shadow-xl p-6 border border-gray-100 flex items-center">
-            <div class="w-14 h-14 rounded-xl bg-green-50 flex items-center justify-center text-green-600 text-2xl mr-4">
-                <i class="fas fa-graduation-cap"></i>
+
+        <div class="bg-panel p-8 border-l-2 border-gray-700 relative overflow-hidden group hover:border-gold transition-colors">
+            <div class="absolute right-0 top-0 opacity-5 group-hover:opacity-10 transition-opacity transform scale-150">
+                <i class="fas fa-graduation-cap text-8xl text-white"></i>
             </div>
-            <div>
-                <p class="text-sm text-gray-500 font-medium">Cursos Ativos</p>
-                <p id="total-courses" class="text-2xl font-bold text-gray-900">-</p>
-            </div>
+            <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2 group-hover:text-gold transition-colors">Cursos Ativos</p>
+            <h3 id="total-courses" class="text-4xl font-light text-white">-</h3>
         </div>
-        <div class="bg-white rounded-2xl shadow-xl p-6 border border-gray-100 flex items-center">
-            <div class="w-14 h-14 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600 text-2xl mr-4">
-                <i class="fas fa-chart-line"></i>
+
+        <div class="bg-panel p-8 border-l-2 border-gray-700 relative overflow-hidden group hover:border-green-500 transition-colors">
+            <div class="absolute right-0 top-0 opacity-5 group-hover:opacity-10 transition-opacity transform scale-150">
+                <i class="fas fa-chart-line text-8xl text-white"></i>
             </div>
-            <div>
-                <p class="text-sm text-gray-500 font-medium">Vendas (Mês)</p>
-                <p class="text-2xl font-bold text-gray-900">R$ 0,00</p>
-            </div>
+            <p class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2 group-hover:text-green-500 transition-colors">Faturamento</p>
+            <h3 class="text-4xl font-light text-white">R$ 0,00</h3>
         </div>
     </div>
 
-    <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
-        <div class="px-6 py-4 border-b border-gray-200 bg-gray-50/50 flex justify-between items-center">
-            <h3 class="font-bold text-gray-800">Cursos Cadastrados</h3>
+    <div class="bg-panel rounded-lg overflow-hidden border border-gray-800">
+        <div class="px-8 py-6 border-b border-gray-800 flex justify-between items-center bg-zinc-900">
+            <h3 class="font-bold text-white uppercase tracking-wider text-sm">Catálogo de Cursos</h3>
         </div>
 
-        <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
-            <tr>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Curso</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoria</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Preço</th>
-                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
-            </tr>
-            </thead>
-
-            <tbody class="bg-white divide-y divide-gray-200">
-            <tr>
-                <td colspan="4" class="text-center py-10 text-gray-500">
-                    <i class="fas fa-spinner fa-spin"></i> Carregando lista...
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="overflow-x-auto">
+            <table class="w-full text-left">
+                <thead>
+                <tr class="text-gray-500 text-xs uppercase tracking-wider border-b border-gray-800">
+                    <th class="px-8 py-5 font-medium">Curso</th>
+                    <th class="px-8 py-5 font-medium">Categoria</th>
+                    <th class="px-8 py-5 font-medium">Preço</th>
+                    <th class="px-8 py-5 font-medium text-right">Ações</th>
+                </tr>
+                </thead>
+                <tbody id="courses-table-body" class="divide-y divide-gray-800 text-sm text-gray-300">
+                <tr>
+                    <td colspan="4" class="text-center py-12 text-gray-600">
+                        Carregando dados...
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
 </main>
 
-<script src="/js/main.js"></script>    <script src="/js/admin.js"></script>   </body>
+<script src="/js/main.js"></script>
+<script src="/js/admin.js"></script>
+</body>
 </html>
