@@ -3,71 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | OdontoPro</title>
+    <title>Acesso VIP | OdontoPro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Manrope:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: '#D4AF37',
+                        goldlight: '#F3E5AB',
+                        dark: '#0a0a0a',
+                        surface: '#121212'
+                    },
+                    fontFamily: {
+                        sans: ['Manrope', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .luxury-bg {
+            background-image: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(0,0,0,0.9)), url('https://images.unsplash.com/photo-1606811841689-23dfddce3e95?q=80&w=1974&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+        .gold-glow:focus {
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+    </style>
 </head>
-<body class="bg-gray-50 font-sans antialiased h-screen flex items-center justify-center">
+<body class="luxury-bg h-screen flex items-center justify-center font-sans text-gray-200">
 
-<div class="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden">
-    <div class="bg-blue-600 p-8 text-center">
-        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white mb-4">
-            <i class="fas fa-tooth text-blue-600 text-3xl"></i>
+<div class="w-full max-w-md bg-surface/90 backdrop-blur-xl rounded-none border border-white/10 shadow-2xl overflow-hidden relative">
+
+    <div class="h-1 w-full bg-gradient-to-r from-transparent via-gold to-transparent"></div>
+
+    <div class="p-10">
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full border border-gold/30 bg-dark mb-4 shadow-[0_0_20px_rgba(212,175,55,0.1)]">
+                <i class="fas fa-tooth text-gold text-3xl"></i>
+            </div>
+            <h2 class="text-3xl font-serif font-bold text-white tracking-wide">Bem-vindo</h2>
+            <p class="text-gray-500 text-sm mt-2 uppercase tracking-widest">Área Exclusiva</p>
         </div>
-        <h2 class="text-2xl font-bold text-white">Bem-vindo de volta!</h2>
-        <p class="text-blue-100 mt-2">Acesse sua área exclusiva</p>
-    </div>
 
-    <div class="p-8">
-
-        <div id="error-container" class="hidden mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-            <strong class="font-bold">Erro!</strong>
-            <span class="block sm:inline" id="error-message">Usuário ou senha inválidos.</span>
+        <div id="error-container" class="hidden mb-6 bg-red-900/30 border border-red-800 text-red-200 px-4 py-3 text-sm rounded flex items-center gap-3" role="alert">
+            <i class="fas fa-exclamation-circle text-red-500"></i>
+            <span id="error-message">Credenciais inválidas.</span>
         </div>
 
         <form id="login-form" class="space-y-6">
             <div>
-                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
+                <label for="email" class="block text-xs font-bold text-gold uppercase tracking-wider mb-2">E-mail Profissional</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <i class="fas fa-envelope text-gray-400"></i>
+                        <i class="fas fa-envelope text-gray-600"></i>
                     </div>
                     <input type="email" id="email" name="email" required
-                           class="pl-10 block w-full rounded-lg border-gray-300 border p-2.5 focus:ring-blue-500 outline-none transition"
-                           placeholder="seu@email.com">
+                           class="pl-10 block w-full bg-dark border border-gray-800 text-white p-3 rounded-none focus:border-gold focus:ring-0 gold-glow outline-none transition-all placeholder-gray-700"
+                           placeholder="nome@clinica.com">
                 </div>
             </div>
 
             <div>
-                <div class="flex items-center justify-between mb-1">
-                    <label for="password" class="block text-sm font-medium text-gray-700">Senha</label>
+                <div class="flex items-center justify-between mb-2">
+                    <label for="password" class="block text-xs font-bold text-gold uppercase tracking-wider">Senha</label>
+                    <a href="#" class="text-xs text-gray-500 hover:text-white transition">Esqueceu?</a>
                 </div>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <i class="fas fa-lock text-gray-400"></i>
+                        <i class="fas fa-lock text-gray-600"></i>
                     </div>
                     <input type="password" id="password" name="password" required
-                           class="pl-10 block w-full rounded-lg border-gray-300 border p-2.5 focus:ring-blue-500 outline-none transition"
+                           class="pl-10 block w-full bg-dark border border-gray-800 text-white p-3 rounded-none focus:border-gold focus:ring-0 gold-glow outline-none transition-all placeholder-gray-700"
                            placeholder="••••••••">
                 </div>
             </div>
 
             <button type="submit"
-                    class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
-                Entrar
+                    class="w-full flex justify-center py-3.5 px-4 bg-gradient-to-r from-gold to-yellow-600 hover:from-yellow-400 hover:to-gold text-black font-bold uppercase tracking-widest text-xs transition-all transform hover:scale-[1.02] shadow-lg">
+                Acessar Plataforma
             </button>
         </form>
 
-        <div class="mt-6 text-center text-sm">
-            <p class="text-gray-600">
-                Ainda não tem uma conta?
-                <a href="/auth/cadastro.html" class="font-medium text-blue-600 hover:text-blue-500 hover:underline">Cadastre-se gratuitamente</a>
+        <div class="mt-8 text-center border-t border-white/5 pt-6">
+            <p class="text-gray-500 text-sm">
+                Não é membro?
+                <a href="/auth/cadastro.html" class="text-gold hover:text-white font-bold transition-colors ml-1">Solicitar Acesso</a>
             </p>
         </div>
 
-        <div class="mt-4 text-center">
-            <a href="/" class="text-xs text-gray-400 hover:text-gray-600 flex items-center justify-center gap-1">
-                <i class="fas fa-arrow-left"></i> Voltar para Home
+        <div class="mt-6 text-center">
+            <a href="/" class="text-xs text-gray-600 hover:text-gold transition-colors flex items-center justify-center gap-2">
+                <i class="fas fa-arrow-left"></i> Voltar ao Início
             </a>
         </div>
     </div>
