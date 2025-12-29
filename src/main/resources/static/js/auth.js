@@ -1,12 +1,12 @@
 // ==========================================
-// CONFIGURAÇÃO CENTRAL (Passo 1)
+// CONFIGURAÇÃO CENTRAL
 // ==========================================
 const BASE_URL = "http://localhost:8081";
 
 document.addEventListener("DOMContentLoaded", () => {
 
     // ==========================================
-    // LÓGICA DE LOGIN
+    // 1. LÓGICA DE LOGIN
     // ==========================================
     const loginForm = document.getElementById("login-form");
 
@@ -14,60 +14,66 @@ document.addEventListener("DOMContentLoaded", () => {
         loginForm.addEventListener("submit", async (e) => {
             e.preventDefault(); // Impede o reload da página
 
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
 
-            // Elementos de feedback visual (se existirem no HTML)
             const errorContainer = document.getElementById("error-container");
             const errorMessage = document.getElementById("error-message");
 
-            // Limpa erros anteriores
+            // Limpa erros visuais anteriores
             if (errorContainer) errorContainer.classList.add("hidden");
 
             try {
                 console.log(`Tentando login em: ${BASE_URL}/auth/login`);
 
-                // Requisição para o Backend na porta 8081
                 const response = await fetch(`${BASE_URL}/auth/login`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ email, password })
                 });
 
-                // Se o backend devolver erro (401/403/500) mas com texto em vez de JSON
                 if (!response.ok) {
-                    throw new Error("Falha na autenticação");
+                    throw new Error("Credenciais inválidas");
                 }
 
                 const data = await response.json();
 
-                // 1. Salva Token e Dados
+                // --- 🕵️‍♂️ ÁREA DE INVESTIGAÇÃO (DEBUG) ---
+                console.log("====================================");
+                console.log("1. O QUE O JAVA RESPONDEU (JSON COMPLETO):", data);
+                console.log("2. CAMPO 'ROLE' VEIO COMO:", data.role);
+                // ------------------------------------------------
+
+                // Salva Token e Dados no Navegador
                 localStorage.setItem("token", data.token);
-                localStorage.setItem("userRole", data.role); // Ex: ROLE_ADMIN ou ROLE_USER
+                // Se a role vier nula, salva string vazia para não quebrar
+                localStorage.setItem("userRole", data.role || "");
                 localStorage.setItem("userName", data.name);
 
-                console.log("Login sucesso! Role:", data.role);
-
-                // 2. Redirecionamento Inteligente
-                // Garante que a role esteja em maiúsculo e sem espaços
+                // Lógica de Redirecionamento (Aceita ADMIN ou ROLE_ADMIN)
                 const role = data.role ? data.role.toUpperCase().trim() : "";
 
+                console.log("3. ROLE PROCESSADA PELO JS:", `"${role}"`); // Aspas para ver se tem espaço
+
                 if (role === 'ADMIN' || role === 'ROLE_ADMIN') {
+                    console.log("👉 DECISÃO: Indo para ADMIN");
                     window.location.href = "/admin/dashboard.html";
                 } else {
+                    console.log("👉 DECISÃO: Indo para ALUNO (Caiu no else)");
                     window.location.href = "/aluno/meus-cursos.html";
                 }
+                console.log("====================================");
 
             } catch (error) {
                 console.error("Erro no login:", error);
-                if (errorMessage) errorMessage.textContent = "Email ou senha incorretos (ou erro no servidor).";
+                if (errorMessage) errorMessage.textContent = "Email ou senha incorretos.";
                 if (errorContainer) errorContainer.classList.remove("hidden");
             }
         });
     }
 
     // ==========================================
-    // LÓGICA DE CADASTRO
+    // 2. LÓGICA DE CADASTRO
     // ==========================================
     const cadastroForm = document.getElementById("cadastro-form");
 
@@ -75,37 +81,44 @@ document.addEventListener("DOMContentLoaded", () => {
         cadastroForm.addEventListener("submit", async (e) => {
             e.preventDefault();
 
-            const nome = document.getElementById("nome").value;
-            const email = document.getElementById("email").value;
-            const senha = document.getElementById("senha").value;
-            const confirmaSenha = document.getElementById("confirma_senha").value;
+            const nomeInput = document.getElementById("nome").value.trim();
+            const emailInput = document.getElementById("email").value.trim();
+            const senhaInput = document.getElementById("senha").value;
+            const confirmaSenhaInput = document.getElementById("confirma_senha").value;
 
-            if (senha !== confirmaSenha) {
+            if (senhaInput !== confirmaSenhaInput) {
                 alert("As senhas não coincidem!");
                 return;
             }
 
-            try {
-                // AVISO: Pedi para o backend usar /auth/register para ser público
-                console.log(`Tentando cadastro em: ${BASE_URL}/auth/register`);
+            const payload = {
+                name: nomeInput,
+                email: emailInput,
+                password: senhaInput,
+                role: "USER"
+            };
 
-                const response = await fetch(`${BASE_URL}/auth/register`, {
+            try {
+                console.log("Enviando cadastro para:", `${BASE_URL}/users`);
+
+                const response = await fetch(`${BASE_URL}/users`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ name: nome, email: email, password: senha, role: "USER" })
-                    // Nota: role: "USER" é opcional, depende se o backend exige
+                    body: JSON.stringify(payload)
                 });
 
                 if (response.ok) {
-                    alert("Conta criada com sucesso! Faça login.");
+                    alert("Conta criada com sucesso! 🎉\nVocê será redirecionado para o login.");
                     window.location.href = "/auth/login.html";
                 } else {
-                    const text = await response.text();
-                    alert("Erro ao cadastrar: " + text);
+                    const errorText = await response.text();
+                    console.error("Erro do servidor:", errorText);
+                    alert("Erro ao cadastrar: " + errorText);
                 }
+
             } catch (error) {
-                console.error("Erro no cadastro:", error);
-                alert("Erro de conexão com o servidor 8081.");
+                console.error("Erro de conexão:", error);
+                alert("Não foi possível conectar ao servidor.");
             }
         });
     }
