@@ -1,60 +1,52 @@
 package com.courseplatform.backend.controller;
 
 import com.courseplatform.backend.dto.CourseDTO;
+import com.courseplatform.backend.entity.Course;
+import com.courseplatform.backend.repository.CourseRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/courses")
+@RequiredArgsConstructor // Isso aqui injeta o repository automaticamente
 public class CourseController {
 
-    // Lista temporária para simular banco de dados
-    private List<CourseDTO> cursosMock = new ArrayList<>();
+    private final CourseRepository repository;
 
-    public CourseController() {
-        // Popula com um dado de teste pro John ver na tela
-        // Usando o construtor gerado pelo Lombok @AllArgsConstructor
-        cursosMock.add(new CourseDTO(
-                1L,
-                "Implantodontia Básica",
-                "implanto-basica",
-                new BigDecimal("1500.00"),
-                "Implante",
-                "https://via.placeholder.com/150",
-                "Curso introdutório"
-        ));
-    }
-
-    // GET /courses - Listar
+    // GET - Agora busca no Banco de Dados
     @GetMapping
-    public ResponseEntity<List<CourseDTO>> listarCursos() {
-        return ResponseEntity.ok(cursosMock);
+    public ResponseEntity<List<Course>> listarCursos() {
+        List<Course> cursos = repository.findAll();
+        return ResponseEntity.ok(cursos);
     }
 
-    // POST /courses - Criar
+    // POST - Agora salva no Banco de Dados
     @PostMapping
-    public ResponseEntity<CourseDTO> criarCurso(@RequestBody CourseDTO novoCurso) {
-        // CORREÇÃO AQUI: Usar .getTitle() em vez de .title()
-        System.out.println("Recebido curso: " + novoCurso.getTitle());
+    public ResponseEntity<Course> criarCurso(@RequestBody CourseDTO dados) {
+        System.out.println("Salvando no banco: " + dados.getTitle());
 
-        // Simula salvar no banco (adiciona na lista)
-        cursosMock.add(novoCurso);
+        // Passando os dados do DTO (JSON) para a Entidade (Banco)
+        Course novoCurso = new Course();
+        novoCurso.setTitle(dados.getTitle());
+        novoCurso.setSlug(dados.getSlug());
+        novoCurso.setPrice(dados.getPrice());
+        novoCurso.setCategory(dados.getCategory());
+        novoCurso.setImageUrl(dados.getImageUrl());
+        novoCurso.setDescription(dados.getDescription());
 
-        return ResponseEntity.ok(novoCurso);
+        // O comando mágico que grava no Postgres
+        Course cursoSalvo = repository.save(novoCurso);
+
+        return ResponseEntity.ok(cursoSalvo);
     }
 
-    // DELETE /courses/{id} - Deletar
+    // DELETE - Agora apaga do Banco de Dados
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarCurso(@PathVariable Long id) {
-        System.out.println("Deletando curso ID: " + id);
-
-        // CORREÇÃO AQUI: Usar .getId() em vez de .id()
-        cursosMock.removeIf(c -> c.getId().equals(id));
-
+        repository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 }
