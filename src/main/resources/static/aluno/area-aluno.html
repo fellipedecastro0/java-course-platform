@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Área | OdontoPro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Manrope:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script>
+        tailwind.config = { theme: { extend: { colors: { gold: '#D4AF37', dark: { 900: '#050505', 800: '#121212' } }, fontFamily: { sans: ['Manrope', 'sans-serif'], serif: ['Playfair Display', 'serif'] } } } }
+    </script>
+    <style>
+        body { background-color: #050505; color: #eee; }
+        .skeleton { background: linear-gradient(90deg, #1f1f1f 25%, #2a2a2a 50%, #1f1f1f 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+<nav class="sticky top-0 z-50 bg-dark-900/90 backdrop-blur-md border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <i class="fas fa-tooth text-gold text-2xl"></i>
+            <span class="font-serif text-xl text-white tracking-widest">ODONTO<span class="text-gold">PRO</span></span>
+        </div>
+        <div class="hidden md:flex gap-8 text-xs font-bold uppercase tracking-widest">
+            <a href="/aluno/catalogo.html" class="text-gray-400 hover:text-white transition">Loja de Cursos</a>
+            <a href="/aluno/area-aluno.html" class="text-gold border-b-2 border-gold pb-1">Minha Área</a>
+        </div>
+        <div class="flex items-center gap-4">
+            <span id="user-name-display" class="text-sm font-bold hidden sm:block">...</span>
+            <a href="#" id="btn-logout" class="text-gray-500 hover:text-red-500"><i class="fas fa-power-off"></i></a>
+        </div>
+    </div>
+</nav>
+
+<main class="max-w-7xl mx-auto py-12 px-6 flex-1">
+
+    <div class="flex items-end justify-between mb-10 border-b border-white/10 pb-6">
+        <div>
+            <h1 class="text-3xl font-serif text-white">Meus Cursos</h1>
+            <p class="text-gray-500 text-sm mt-1">Continue os seus estudos.</p>
+        </div>
+    </div>
+
+    <div id="my-courses-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    </div>
+</main>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="/js/utils.js"></script>
+<script src="/js/student.js"></script> </body>
+</html>

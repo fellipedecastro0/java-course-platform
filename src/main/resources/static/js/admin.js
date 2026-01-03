@@ -1,153 +1,113 @@
+// ==========================================
+// ADMIN DASHBOARD - ODONTOPRO LUXURY
+// ==========================================
+
+const API_URL = "http://localhost:8081";
+
 document.addEventListener("DOMContentLoaded", () => {
     fetchDashboardStats();
     fetchAdminCourses();
+    setupLogout();
 });
 
-// CONFIGURAÇÃO
-const API_PREFIX = '';
-
-// ==========================================
-// 1. BUSCAR ESTATÍSTICAS (MOCK)
-// ==========================================
-async function fetchDashboardStats() {
-    console.log("Iniciando dashboard...");
-    const elStudents = document.getElementById("total-students");
-    const elCourses = document.getElementById("total-courses");
-
-    if(elStudents) elStudents.textContent = "1.240";
-    if(elCourses) elCourses.textContent = "8";
+function setupLogout() {
+    const btn = document.getElementById("btn-logout"); // Adicione um ID no botão de sair do admin se não tiver
+    if(btn) {
+        btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            localStorage.clear();
+            window.location.href = "/auth/login.html";
+        });
+    }
 }
 
-// ==========================================
-// 2. BUSCAR LISTA DE CURSOS
-// ==========================================
-async function fetchAdminCourses() {
-    // Agora buscamos pelo ID específico que coloquei no HTML novo
-    // Se não achar pelo ID, tenta pelo tbody genérico
-    const tableBody = document.getElementById("courses-table-body") || document.querySelector("tbody");
+async function fetchDashboardStats() {
+    // Mock de estatísticas (futuramente virá do back)
+    const elS = document.getElementById("total-students");
+    const elC = document.getElementById("total-courses");
+    if(elS) elS.textContent = "1.240";
+    if(elC) elC.textContent = "8";
+}
 
-    if (!tableBody) return;
+async function fetchAdminCourses() {
+    const tbody = document.getElementById("courses-table-body");
+    if (!tbody) return;
 
     const token = localStorage.getItem("token");
-
-    if (!token) {
-        console.warn("Nenhum token encontrado. Redirecionando...");
-        alert("Você não está logado.");
-        window.location.href = "/auth/login.html";
-        return;
-    }
-
-    console.log(`[DEBUG] Tentando buscar cursos em: ${window.location.origin}${API_PREFIX}/courses`);
+    if (!token) { window.location.href = "/auth/login.html"; return; }
 
     try {
-        const response = await fetch(`${API_PREFIX}/courses`, {
-            method: "GET",
-            headers: {
-                "Authorization": `Bearer ${token}`,
-                "Content-Type": "application/json"
-            }
+        const res = await fetch(`${API_URL}/courses`, {
+            headers: { "Authorization": `Bearer ${token}` }
         });
 
-        console.log(`[DEBUG] Status da resposta: ${response.status}`);
-
-        if (response.status === 401 || response.status === 403) {
-            console.error("Token inválido ou expirado.");
+        if (res.status === 403 || res.status === 401) {
             localStorage.removeItem("token");
-            alert("Sessão expirada. Faça login novamente.");
             window.location.href = "/auth/login.html";
             return;
         }
 
-        if (!response.ok) {
-            const errorText = await response.text();
-            throw new Error(`Erro do servidor (${response.status}): ${errorText}`);
-        }
+        const courses = await res.json();
+        tbody.innerHTML = "";
 
-        let courses;
-        try {
-            courses = await response.json();
-        } catch (jsonError) {
-            const rawText = await response.text();
-            console.error("O servidor não retornou um JSON válido. Retornou:", rawText);
-            throw new Error("A resposta do servidor não é um JSON válido.");
-        }
-
-        // Renderização
-        tableBody.innerHTML = "";
-
-        if (!Array.isArray(courses) || courses.length === 0) {
-            // Mudei aqui para texto claro
-            tableBody.innerHTML = `<tr><td colspan="4" class="text-center py-8 text-gray-500 uppercase tracking-widest text-xs">Nenhum curso encontrado.</td></tr>`;
+        if (!courses.length) {
+            tbody.innerHTML = `<tr><td colspan="4" class="text-center py-8 text-gray-500 text-xs uppercase">Nenhum curso cadastrado.</td></tr>`;
             return;
         }
 
-        courses.forEach(course => {
-            const price = parseFloat(course.price);
-
-            // --- AQUI ESTÁ A MUDANÇA VISUAL (Sua lógica continua igual) ---
-            const row = `
+        courses.forEach(c => {
+            tbody.innerHTML += `
                 <tr class="border-b border-gray-800 hover:bg-white/5 transition-colors group">
                     <td class="px-8 py-6 whitespace-nowrap">
                         <div class="flex items-center">
                             <div class="h-10 w-10 rounded-full bg-yellow-500/10 flex items-center justify-center text-yellow-500 font-bold border border-yellow-500/30">
-                                ${course.title ? course.title.charAt(0).toUpperCase() : '?'}
+                                ${c.title.charAt(0)}
                             </div>
                             <div class="ml-4">
-                                <div class="text-sm font-bold text-yellow-500 group-hover:text-yellow-400 transition-colors">${course.title}</div>
-                                <div class="text-[10px] text-green-500 uppercase tracking-wider mt-1 font-bold">Ativo</div>
+                                <div class="text-sm font-bold text-yellow-500">${c.title}</div>
+                                <div class="text-[10px] text-green-500 uppercase font-bold mt-1">Ativo</div>
                             </div>
                         </div>
                     </td>
-                    <td class="px-8 py-6 whitespace-nowrap text-sm text-gray-400">
-                        ${course.category || 'Geral'}
-                    </td>
-                    <td class="px-8 py-6 whitespace-nowrap text-sm font-medium text-white">
-                        R$ ${isNaN(price) ? '0.00' : price.toFixed(2)}
-                    </td>
+                    <td class="px-8 py-6 whitespace-nowrap text-sm text-gray-400">${c.category || 'Geral'}</td>
+                    <td class="px-8 py-6 whitespace-nowrap text-sm font-medium text-white">R$ ${(c.price || 0).toFixed(2)}</td>
                     <td class="px-8 py-6 whitespace-nowrap text-right text-sm font-medium">
-                        <button onclick="deleteCourse(${course.id})" class="text-red-500 hover:text-red-400 transition-colors p-2 rounded-full hover:bg-red-500/10" title="Excluir">
+                        <a href="/admin/gerenciar-aulas.html?id=${c.id}&title=${encodeURIComponent(c.title)}" 
+                           class="text-gold hover:text-white mr-4 transition-colors inline-flex items-center gap-2 border border-gold/30 px-3 py-1 rounded hover:bg-gold hover:text-black" 
+                           title="Adicionar Aulas">
+                           <i class="fas fa-layer-group"></i> Aulas
+                        </a>
+                        
+                        <button onclick="deleteCourse(${c.id})" class="text-red-500 hover:text-red-400 p-2 rounded-full hover:bg-red-500/10 transition-colors">
                             <i class="fas fa-trash"></i>
                         </button>
                     </td>
-                </tr>
-            `;
-            tableBody.innerHTML += row;
+                </tr>`;
         });
-
-    } catch (error) {
-        console.error("ERRO FATAL:", error);
-        tableBody.innerHTML = `
-            <tr>
-                <td colspan="4" class="text-center py-4 text-red-500">
-                    <strong>Erro ao carregar dados:</strong><br>
-                    ${error.message}
-                </td>
-            </tr>`;
+    } catch (e) {
+        console.error(e);
+        tbody.innerHTML = `<tr><td colspan="4" class="text-center py-4 text-red-500">Erro de conexão com o servidor.</td></tr>`;
     }
 }
 
-// ==========================================
-// 3. DELETAR CURSO (LÓGICA ORIGINAL)
-// ==========================================
 async function deleteCourse(id) {
-    if (!confirm("Tem certeza que deseja excluir este curso?")) return;
-    const token = localStorage.getItem("token");
+    if (!confirm("Tem certeza que deseja excluir este curso permanentemente?")) return;
 
+    const token = localStorage.getItem("token");
     try {
-        const response = await fetch(`${API_PREFIX}/courses/${id}`, {
+        const res = await fetch(`${API_URL}/courses/${id}`, {
             method: "DELETE",
             headers: { "Authorization": `Bearer ${token}` }
         });
 
-        if (response.ok) {
-            alert("Curso excluído com sucesso!");
-            fetchAdminCourses(); // Recarrega a lista
+        if (res.ok) {
+            // UX: Feedback Visual
+            if(typeof UI !== 'undefined') UI.toast.success("Curso excluído com sucesso!");
+            fetchAdminCourses();
         } else {
-            const err = await response.text();
-            alert("Erro ao excluir: " + err);
+            alert("Erro ao excluir. Verifique se o curso possui alunos matriculados.");
         }
     } catch (e) {
-        console.error("Erro de rede ao excluir:", e);
         alert("Erro de conexão.");
     }
 }

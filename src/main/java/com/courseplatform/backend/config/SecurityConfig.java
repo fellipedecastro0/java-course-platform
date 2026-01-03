@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -25,7 +24,6 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    // 1. CORREÇÃO: Injetamos o filtro que o Felipe criou
     @Autowired
     private SecurityFilter securityFilter;
 
@@ -33,31 +31,39 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(Customizer.withDefaults())
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Habilita o CORS configurado abaixo
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth
-                        // Libera arquivos estáticos
+                .authorizeHttpRequests(authorize -> authorize
+                        // ====================================================
+                        // 1. ZONA VERDE (ARQUIVOS PÚBLICOS & FRONTEND)
+                        // ====================================================
+                        // Libera geral para arquivos estáticos e páginas HTML
                         .requestMatchers(
-                                "/auth/**",
-                                "/js/**",
-                                "/css/**",
-                                "/img/**",
-                                "/*.html",
-                                "/admin/**",
-                                "/aluno/**",
-                                "/components/**",
-                                "/fragments/**"
+                                "/",
+                                "/index.html",
+                                "/error",         // IMPORTANTE: Libera a página de erro do Spring
+                                "/favicon.ico",
+                                "/auth/**",       // Páginas de Login/Cadastro
+                                "/aluno/**",      // Páginas do Aluno (HTML)
+                                "/admin/**",      // Páginas do Admin (HTML)
+                                "/js/**",         // Scripts
+                                "/css/**",        // Estilos
+                                "/images/**",     // Imagens
+                                "/assets/**"
                         ).permitAll()
 
-                        // 2. CORREÇÃO CRÍTICA: Adicionei "/users" aqui! <---
-                        // Sem isso, o cadastro dá erro 403.
+                        // ====================================================
+                        // 2. API PÚBLICA (ENDPOINTS DE AÇÃO)
+                        // ====================================================
+                        // Permite Login e Cadastro sem token
                         .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/register", "/users").permitAll()
 
-                        // O Resto exige Token
+                        // ====================================================
+                        // 3. ZONA RESTRITA (DADOS DO SISTEMA)
+                        // ====================================================
+                        // Todo o resto (ex: GET /courses, POST /courses) exige Token
                         .anyRequest().authenticated()
                 )
-                // 3. CORREÇÃO CRÍTICA: Ligamos o filtro de Token! <---
-                // Sem isso, o login funciona mas o dashboard dá erro 403.
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
@@ -68,18 +74,19 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    // Bean necessário para o Controller de Login funcionar
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
+    // Configuração Global de CORS (Evita erros de conexão entre Front e Back)
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("*")); // Libera geral
+        configuration.setAllowedOrigins(List.of("*")); // Permite qualquer origem (localhost, ip, etc)
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+        configuration.setAllowedHeaders(List.of("*")); // Permite todos os headers (Authorization, Content-Type)
+        configuration.setAllowCredentials(false); // false quando allowedOrigins é *
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

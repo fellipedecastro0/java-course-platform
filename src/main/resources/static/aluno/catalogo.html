@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Cursos | OdontoPro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Manrope:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script>
+        tailwind.config = { theme: { extend: { colors: { gold: '#D4AF37', dark: { 900: '#050505', 800: '#121212' } }, fontFamily: { sans: ['Manrope', 'sans-serif'], serif: ['Playfair Display', 'serif'] } } } }
+    </script>
+    <style>
+        .luxury-bg {
+            background-image: linear-gradient(to bottom, rgba(5,5,5,0.95), rgba(5,5,5,0.85)), url('https://images.unsplash.com/photo-1628177142898-93e48732b86a?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover; background-attachment: fixed; background-position: center;
+        }
+        .skeleton { background: linear-gradient(90deg, #1f1f1f 25%, #2a2a2a 50%, #1f1f1f 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    </style>
+</head>
+<body class="luxury-bg min-h-screen text-gray-200">
+
+<nav class="sticky top-0 z-50 bg-dark-900/90 backdrop-blur-md border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <i class="fas fa-tooth text-gold text-2xl"></i>
+            <span class="font-serif text-xl text-white tracking-widest">ODONTO<span class="text-gold">PRO</span></span>
+        </div>
+        <div class="hidden md:flex gap-8 text-xs font-bold uppercase tracking-widest">
+            <a href="/aluno/catalogo.html" class="text-gold border-b-2 border-gold pb-1">Loja de Cursos</a>
+            <a href="/aluno/area-aluno.html" class="text-gray-400 hover:text-white transition">Minha Área</a>
+        </div>
+        <div class="flex items-center gap-4">
+            <span id="user-name-display" class="text-sm font-bold hidden sm:block">...</span>
+            <a href="#" id="btn-logout" class="text-gray-500 hover:text-red-500"><i class="fas fa-power-off"></i></a>
+        </div>
+    </div>
+</nav>
+
+<main class="max-w-7xl mx-auto py-12 px-6">
+    <div class="text-center mb-16 space-y-4">
+        <span class="px-3 py-1 border border-gold/30 rounded-full text-[10px] uppercase tracking-widest text-gold bg-gold/5">Catálogo Oficial</span>
+        <h1 class="text-4xl md:text-5xl font-serif text-white">Invista na sua Carreira</h1>
+        <p class="text-gray-400 font-light max-w-2xl mx-auto">Explore nossos cursos de alta performance e domine as técnicas mais lucrativas da odontologia moderna.</p>
+    </div>
+
+    <div class="flex justify-center mb-12">
+        <div class="relative w-full max-w-md">
+            <i class="fas fa-search absolute left-4 top-3.5 text-gray-500"></i>
+            <input type="text" id="search-input" placeholder="Buscar curso por nome..." class="w-full bg-dark-800 border border-white/10 rounded-full py-3 pl-12 text-sm text-white focus:border-gold outline-none shadow-lg">
+        </div>
+    </div>
+
+    <div id="courses-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    </div>
+</main>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="/js/utils.js"></script>
+<script src="/js/store.js"></script> </body>
+</html>

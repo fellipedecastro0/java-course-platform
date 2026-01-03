@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Pagamento Aprovado | OdontoPro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        tailwind.config = { theme: { extend: { colors: { gold: '#D4AF37', dark: '#0a0a0a' }, fontFamily: { sans: ['Manrope', 'sans-serif'] } } } }
+    </script>
+</head>
+<body class="bg-black text-white h-screen flex flex-col items-center justify-center text-center p-6">
+
+<div class="mb-8 animate-bounce">
+    <div class="w-24 h-24 rounded-full border-2 border-green-500 flex items-center justify-center bg-green-500/10 mx-auto shadow-[0_0_30px_rgba(34,197,94,0.3)]">
+        <i class="fas fa-check text-4xl text-green-500"></i>
+    </div>
+</div>
+
+<h1 class="text-3xl font-serif text-gold mb-2">Pagamento Confirmado!</h1>
+<p class="text-gray-400 mb-8 max-w-md">Parabéns pelo investimento. O curso <span id="course-name" class="text-white font-bold">...</span> já foi liberado na sua conta.</p>
+
+<a href="/aluno/area-aluno.html" class="px-8 py-3 bg-gold hover:bg-yellow-500 text-black font-bold uppercase tracking-widest rounded-sm transition shadow-lg">
+    Acessar Área do Aluno
+</a>
+
+<script>
+    // Pega o nome do curso da URL para mostrar na tela
+    const params = new URLSearchParams(window.location.search);
+    const courseName = params.get('course');
+    if(courseName) document.getElementById('course-name').textContent = decodeURIComponent(courseName);
+
+    // Mock de liberação visual
+    setTimeout(() => {
+        console.log("Acesso liberado.");
+    }, 1000);
+</script>
+</body>
+</html>

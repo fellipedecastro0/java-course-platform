@@ -3,97 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OdontoPro | Plataforma de Ensino</title>
+    <title>OdontoPro Luxury | Eleve sua Carreira</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Manrope:wght@300;400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { gold: '#D4AF37', dark: '#050505', surface: '#121212' },
+                    fontFamily: { sans: ['Manrope', 'sans-serif'], serif: ['Playfair Display', 'serif'] }
+                }
+            }
+        }
+    </script>
     <style>
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f5f9; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .hero-bg {
+            background: linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 100%), url('https://images.unsplash.com/photo-1628177142898-93e48732b86a?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+        .text-glow { text-shadow: 0 0 20px rgba(212,175,55,0.3); }
+        .fade-in-up { animation: fadeInUp 1s ease-out; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
+<body class="bg-black text-gray-200 font-sans">
 
-<body class="bg-gray-50 font-sans antialiased">
-
-<nav class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-20">
-            <div class="flex items-center">
-                <a href="/static" class="flex items-center hover:opacity-80 transition">
-                    <div class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-blue-50 mr-3">
-                        <i class="fas fa-tooth text-blue-600 text-xl"></i>
-                    </div>
-                    <span class="font-bold text-xl text-gray-900">OdontoPro</span>
-                </a>
-            </div>
-
-            <div class="hidden md:flex items-center space-x-8">
-                <a href="#cursos" class="text-gray-500 hover:text-blue-600 font-medium transition">Cursos</a>
-                <a href="#sobre" class="text-gray-500 hover:text-blue-600 font-medium transition">Sobre</a>
-                <a href="#planos" class="text-gray-500 hover:text-blue-600 font-medium transition">Planos</a>
-            </div>
-
-            <div class="flex items-center gap-4">
-                <a href="/auth/login.html" class="text-gray-600 hover:text-blue-600 font-medium transition">Entrar</a>
-                <a href="/auth/cadastro.html" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-full font-bold shadow-md shadow-blue-200 transition transform hover:-translate-y-0.5">
-                    Começar Agora
-                </a>
-            </div>
+<nav class="fixed w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/10 transition-all duration-300" id="navbar">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <i class="fas fa-tooth text-gold text-2xl"></i>
+            <span class="font-serif text-xl text-white tracking-widest">ODONTO<span class="text-gold">PRO</span></span>
+        </div>
+        <div class="hidden md:flex gap-8 text-sm uppercase tracking-widest font-bold text-gray-400">
+            <a href="#inicio" class="hover:text-gold transition">Início</a>
+            <a href="#cursos" class="hover:text-gold transition">Cursos</a>
+            <a href="#diferenciais" class="hover:text-gold transition">Sobre</a>
+        </div>
+        <div class="flex gap-4">
+            <a href="/auth/login.html" class="px-6 py-2 text-xs font-bold uppercase tracking-widest text-white border border-white/20 hover:border-gold hover:text-gold transition rounded-sm">Entrar</a>
+            <a href="/auth/cadastro.html" class="px-6 py-2 text-xs font-bold uppercase tracking-widest text-black bg-gold hover:bg-yellow-500 transition rounded-sm shadow-[0_0_15px_rgba(212,175,55,0.4)]">Matricule-se</a>
         </div>
     </div>
 </nav>
 
-<header class="bg-white relative overflow-hidden">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32 relative z-10">
-        <div class="max-w-3xl">
-                <span class="inline-block py-1 px-3 rounded-full bg-blue-50 text-blue-600 text-sm font-bold mb-6 border border-blue-100">
-                     A plataforma #1 para Dentistas
-                </span>
-            <h1 class="text-4xl lg:text-6xl font-extrabold text-gray-900 tracking-tight leading-tight mb-6">
-                Especialize-se com os <span class="text-blue-600">melhores mestres</span>.
+<section id="inicio" class="h-screen hero-bg flex items-center relative">
+    <div class="max-w-7xl mx-auto px-6 w-full pt-20">
+        <div class="max-w-2xl fade-in-up">
+            <div class="inline-block px-3 py-1 border border-gold/50 text-gold text-[10px] uppercase tracking-[0.3em] mb-6 bg-black/50 backdrop-blur">
+                Plataforma Premium
+            </div>
+            <h1 class="text-5xl md:text-7xl font-serif text-white leading-tight mb-6">
+                A Excelência da <br><span class="text-gold text-glow">Odontologia</span> Digital
             </h1>
-            <p class="text-lg text-gray-600 mb-10 leading-relaxed max-w-2xl">
-                Domine técnicas avançadas de Implantodontia, Estética e Ortodontia.
+            <p class="text-lg text-gray-300 font-light mb-10 leading-relaxed border-l-2 border-gold pl-6">
+                Domine as técnicas mais avançadas do mercado com os maiores especialistas.
+                Conteúdo cinematográfico, didática impecável e certificação exclusiva.
             </p>
             <div class="flex flex-col sm:flex-row gap-4">
-                <a href="/auth/cadastro.html" class="px-8 py-4 bg-blue-600 text-white font-bold rounded-xl shadow-lg hover:bg-blue-700 transition text-center">
-                    Criar Conta Grátis
+                <a href="/auth/cadastro.html" class="px-8 py-4 bg-gold hover:bg-yellow-500 text-black font-bold uppercase tracking-widest text-sm text-center transition hover:-translate-y-1 shadow-lg">
+                    Começar Agora
                 </a>
-                <a href="/auth/login.html" class="px-8 py-4 bg-white text-gray-700 font-bold rounded-xl border border-gray-200 hover:bg-gray-50 transition text-center">
-                    Já sou aluno
+                <a href="#cursos" class="px-8 py-4 border border-white/30 hover:border-white hover:bg-white/5 text-white font-bold uppercase tracking-widest text-sm text-center transition">
+                    Ver Catálogo
                 </a>
             </div>
         </div>
     </div>
-    <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-blue-50 to-transparent hidden lg:block -z-10"></div>
-</header>
 
-<footer class="bg-gray-900 text-white py-12 border-t border-gray-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-            <div class="col-span-1 md:col-span-1">
-                <div class="flex items-center mb-4">
-                    <i class="fas fa-tooth text-blue-500 text-2xl mr-2"></i>
-                    <span class="font-bold text-xl">OdontoPro</span>
+    <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce text-gray-500">
+        <i class="fas fa-chevron-down text-xl"></i>
+    </div>
+</section>
+
+<section id="diferenciais" class="py-24 bg-dark border-b border-white/5">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
+            <div class="group">
+                <div class="w-16 h-16 bg-surface border border-white/10 flex items-center justify-center text-gold text-2xl mb-6 mx-auto md:mx-0 group-hover:border-gold transition duration-500">
+                    <i class="fas fa-video"></i>
                 </div>
-                <p class="text-gray-400 text-sm leading-relaxed">
-                    Elevando o padrão da odontologia.
-                </p>
+                <h3 class="text-xl font-serif text-white mb-3">Produção 4K</h3>
+                <p class="text-gray-500 font-light text-sm leading-relaxed">Aulas gravadas com equipamentos de cinema para você não perder nenhum detalhe clínico.</p>
             </div>
-            <div>
-                <h4 class="font-bold mb-4 text-blue-400">Links Rápidos</h4>
-                <ul class="space-y-2 text-sm text-gray-400">
-                    <li><a href="#" class="hover:text-white">Cursos</a></li>
-                    <li><a href="#" class="hover:text-white">Login</a></li>
-                </ul>
+            <div class="group">
+                <div class="w-16 h-16 bg-surface border border-white/10 flex items-center justify-center text-gold text-2xl mb-6 mx-auto md:mx-0 group-hover:border-gold transition duration-500">
+                    <i class="fas fa-certificate"></i>
+                </div>
+                <h3 class="text-xl font-serif text-white mb-3">Certificado Ouro</h3>
+                <p class="text-gray-500 font-light text-sm leading-relaxed">Certificação reconhecida e validada para impulsionar o seu currículo e autoridade.</p>
+            </div>
+            <div class="group">
+                <div class="w-16 h-16 bg-surface border border-white/10 flex items-center justify-center text-gold text-2xl mb-6 mx-auto md:mx-0 group-hover:border-gold transition duration-500">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3 class="text-xl font-serif text-white mb-3">Acesso Mobile</h3>
+                <p class="text-gray-500 font-light text-sm leading-relaxed">Estude onde e quando quiser através da nossa plataforma otimizada para qualquer dispositivo.</p>
             </div>
         </div>
-        <div class="border-t border-gray-800 pt-8 text-center text-sm text-gray-500">
-            &copy; 2024 OdontoPro. Todos os direitos reservados.
+    </div>
+</section>
+
+<section id="cursos" class="py-24 bg-black">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="flex justify-between items-end mb-16">
+            <div>
+                <h2 class="text-4xl font-serif text-white mb-2">Cursos em Destaque</h2>
+                <p class="text-gold uppercase tracking-widest text-xs">Os mais procurados</p>
+            </div>
+            <a href="/auth/cadastro.html" class="hidden md:block text-gray-500 hover:text-white transition text-sm uppercase tracking-widest">
+                Ver todos <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="bg-surface border border-white/10 hover:border-gold/50 transition group cursor-pointer">
+                <div class="h-48 overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1628177142898-93e48732b86a?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-700 opacity-80 group-hover:opacity-100 transform group-hover:scale-110">
+                </div>
+                <div class="p-8">
+                    <h3 class="text-xl font-serif text-white mb-2 group-hover:text-gold transition">Implantodontia Avançada</h3>
+                    <p class="text-gray-500 text-sm mb-6 line-clamp-2">Domine técnicas cirúrgicas complexas com segurança e previsibilidade.</p>
+                    <a href="/auth/cadastro.html" class="block w-full py-3 border border-white/20 text-center text-xs uppercase tracking-widest text-white hover:bg-white hover:text-black transition">Saiba Mais</a>
+                </div>
+            </div>
+
+            <div class="bg-surface border border-white/10 hover:border-gold/50 transition group cursor-pointer">
+                <div class="h-48 overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-700 opacity-80 group-hover:opacity-100 transform group-hover:scale-110">
+                </div>
+                <div class="p-8">
+                    <h3 class="text-xl font-serif text-white mb-2 group-hover:text-gold transition">Estética do Sorriso</h3>
+                    <p class="text-gray-500 text-sm mb-6 line-clamp-2">Lentes de contato, facetas e harmonização orofacial.</p>
+                    <a href="/auth/cadastro.html" class="block w-full py-3 border border-white/20 text-center text-xs uppercase tracking-widest text-white hover:bg-white hover:text-black transition">Saiba Mais</a>
+                </div>
+            </div>
+
+            <div class="bg-surface border border-white/10 hover:border-gold/50 transition group cursor-pointer">
+                <div class="h-48 overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1598256989800-fe5f95da9787?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-700 opacity-80 group-hover:opacity-100 transform group-hover:scale-110">
+                </div>
+                <div class="p-8">
+                    <h3 class="text-xl font-serif text-white mb-2 group-hover:text-gold transition">Gestão de Clínica</h3>
+                    <p class="text-gray-500 text-sm mb-6 line-clamp-2">Transforme seu consultório em uma empresa lucrativa.</p>
+                    <a href="/auth/cadastro.html" class="block w-full py-3 border border-white/20 text-center text-xs uppercase tracking-widest text-white hover:bg-white hover:text-black transition">Saiba Mais</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="bg-surface border-t border-white/10 py-12 text-center">
+    <div class="max-w-7xl mx-auto px-6">
+        <i class="fas fa-tooth text-gold text-3xl mb-4"></i>
+        <p class="text-gray-600 text-sm mb-8">© 2026 OdontoPro Luxury. Todos os direitos reservados.</p>
+        <div class="flex justify-center gap-6">
+            <a href="#" class="text-gray-500 hover:text-gold transition"><i class="fab fa-instagram text-xl"></i></a>
+            <a href="#" class="text-gray-500 hover:text-gold transition"><i class="fab fa-linkedin text-xl"></i></a>
+            <a href="#" class="text-gray-500 hover:text-gold transition"><i class="fab fa-youtube text-xl"></i></a>
         </div>
     </div>
 </footer>
 
+<script>
+    // Script simples para Navbar mudar de cor ao rolar
+    window.addEventListener('scroll', function() {
+        const nav = document.getElementById('navbar');
+        if (window.scrollY > 50) {
+            nav.classList.add('bg-black', 'shadow-lg');
+            nav.classList.remove('bg-black/80', 'backdrop-blur-md');
+        } else {
+            nav.classList.remove('bg-black', 'shadow-lg');
+            nav.classList.add('bg-black/80', 'backdrop-blur-md');
+        }
+    });
+</script>
 </body>
 </html>
